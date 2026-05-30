@@ -2,14 +2,20 @@ create view bi_report.salesforce__enterprise_opportunity as (
 select
 so.enterprise_id
 ,enterprise_name
+,so.name as opportunity_name
 ,amount
-,opportunity_name
-,amount
+,so.currency
+,amount * cc.rate as amount_usd
 from
 source.salesforce_opportunity so
 left join
 source.salesforce_enterprise se
 on
 so.enterprise_id=se.enterprise_id
+left join
+source.currency_conversion cc
+on
+so.currency=cc.currency
+and extract(year from so.close_date)=cc.year
 )
 ;
