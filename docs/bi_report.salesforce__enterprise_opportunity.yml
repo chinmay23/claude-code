@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: bi_report.salesforce__enterprise_opportunity
+    description: >
+      Enterprise opportunity reporting view. Enriches each Salesforce opportunity
+      with its enterprise/account attributes and converts the deal amount into the
+      base reporting currency (USD) using the annual FX rate.
+    meta:
+      layer: bi_report
+      materialization: view
+      grain: One row per opportunity (source.salesforce_opportunity.id)
+      aggregation_level: >
+        None / atomic. This is a row-level (transaction-grain) reporting view —
+        it contains no GROUP BY and no aggregate functions. Each row is a single
+        opportunity. amount_usd is a per-row FX conversion, not a sum; any totals
+        (e.g. SUM(amount_usd) per enterprise) must be aggregated by the consumer.
+      sources:
+        - source.salesforce_opportunity
+        - source.salesforce_enterprise
+        - source.currency_conversion
+    columns:
+      - name: enterprise_id
+        description: >
+          Identifier of the enterprise/account (from salesforce_opportunity).
+          Foreign key to source.salesforce_enterprise.enterprise_id.
+      - name: enterprise_name
+        description: Name of the enterprise/account (from salesforce_enterprise).
+      - name: opportunity_name
+        description: Name/title of the opportunity (salesforce_opportunity.name).
+      - name: amount
+        description: >
+          Deal value in the opportunity's original transaction currency.
+          Carried through unchanged from the source (not aggregated).
+      - name: currency
+        description: ISO currency code of `amount` (salesforce_opportunity.currency).
+      - name: amount_usd
+        description: >
+          Deal value converted to USD: amount * currency_conversion.rate, matched
+          on the opportunity's currency and the year of its close_date. Row-level
+          value (not a sum). Null when no matching FX rate exists for that
+          currency/year (left join).

@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: source
+    description: Raw data landed from upstream source systems (Salesforce, FX feed).
+    tables:
+      - name: currency_conversion
+        description: >
+          Annual foreign-exchange rates used to convert amounts to the base
+          reporting currency (USD). Grain: one row per currency per year.
+          Atomic / row level — no aggregation applied.
+        meta:
+          layer: source
+          grain: One row per (currency, year)
+          aggregation_level: None (atomic / row level)
+        columns:
+          - name: year
+            description: >
+              Calendar year the rate applies to. Join key to the year of
+              source.salesforce_opportunity.close_date.
+          - name: rate
+            description: >
+              Multiplicative conversion factor to the base currency (USD):
+              amount_usd = amount * rate. NOTE: typed as int, which cannot hold
+              fractional rates — consider decimal/numeric if rates are non-integer.
+          - name: currency
+            description: >
+              ISO currency code the rate applies to. Join key to
+              source.salesforce_opportunity.currency.

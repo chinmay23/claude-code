@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: source
+    description: Raw data landed from upstream source systems (Salesforce, FX feed).
+    tables:
+      - name: salesforce_opportunity
+        description: >
+          Raw Salesforce opportunities. Grain: one row per opportunity.
+          Atomic / transaction level — no aggregation applied.
+        meta:
+          layer: source
+          grain: One row per opportunity (id)
+          aggregation_level: None (atomic / row level)
+        columns:
+          - name: id
+            description: Unique identifier of the opportunity. Primary key.
+          - name: name
+            description: Human-readable name/title of the opportunity.
+          - name: enterprise_id
+            description: >
+              Foreign key to source.salesforce_enterprise.enterprise_id —
+              the account/enterprise the opportunity belongs to.
+          - name: amount
+            description: >
+              Deal value expressed in the opportunity's original transaction
+              currency (see the `currency` column).
+          - name: currency
+            description: >
+              ISO currency code of `amount`. Join key to
+              source.currency_conversion.currency for FX conversion.
+          - name: close_date
+            description: >
+              Date the opportunity is expected to or did close. Its year is the
+              join key to source.currency_conversion.year to pick the correct
+              annual conversion rate.
