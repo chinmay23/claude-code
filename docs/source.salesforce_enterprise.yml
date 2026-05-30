@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: source
+    description: Raw data landed from upstream source systems (Salesforce, FX feed).
+    tables:
+      - name: salesforce_enterprise
+        description: >
+          Raw Salesforce enterprise/account records. Grain: one row per
+          enterprise. Atomic / row level — no aggregation applied.
+        meta:
+          layer: source
+          grain: One row per enterprise (enterprise_id)
+          aggregation_level: None (atomic / row level)
+        columns:
+          - name: enterprise_id
+            description: Unique identifier of the enterprise/account. Primary key.
+          - name: enterprise_name
+            description: Human-readable name of the enterprise/account.
+          - name: address
+            description: Free-text street address of the enterprise.
+          - name: state
+            description: State / province of the enterprise's address.
+          - name: city
+            description: City of the enterprise's address.
+          - name: country
+            description: Country of the enterprise's address.
