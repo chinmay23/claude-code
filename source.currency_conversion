@@ -1,0 +1,6 @@
+create table source.currency_conversion (
+year int ,
+rate int ,
+currency varchar(5) ,
+)
+;
