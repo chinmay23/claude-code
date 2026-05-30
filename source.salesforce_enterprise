@@ -1,0 +1,10 @@
+create table source.salesforce_enterprise ( 
+enterprise_id int 
+,enterprise_name varchar(50)
+,address varchar(500)
+,state varchar(20)
+,city varchar(20)
+,country varchar(10)
+)
+;
+
