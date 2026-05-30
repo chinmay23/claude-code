@@ -1,6 +1,6 @@
 create view bi_report.salesforce__enterprise_opportunity as (
 select
-enterprise_id
+so.enterprise_id
 ,enterprise_name
 ,amount
 ,opportunity_name
@@ -10,6 +10,6 @@ source.salesforce_opportunity so
 left join
 source.salesforce_enterprise se
 on
-so.opportunity_id=se.id
+so.enterprise_id=se.enterprise_id
 )
 ;
