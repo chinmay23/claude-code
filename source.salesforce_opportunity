@@ -1,0 +1,5 @@
+CREATE TABLE source.salesforce_opportunity (
+    id int ,
+    name varchar(100) ,
+    amount int
+);
