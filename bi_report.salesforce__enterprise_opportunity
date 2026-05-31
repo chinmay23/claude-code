@@ -6,6 +6,8 @@ so.enterprise_id
 ,amount
 ,so.currency
 ,amount * cc.rate as amount_usd
+,so.sr_sales_credit
+,so.sr_sales_credit * cc.rate as sr_sales_credit_usd
 from
 source.salesforce_opportunity so
 left join

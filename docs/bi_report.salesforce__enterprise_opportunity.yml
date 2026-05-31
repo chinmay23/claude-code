@@ -40,3 +40,12 @@ models:
           on the opportunity's currency and the year of its close_date. Row-level
           value (not a sum). Null when no matching FX rate exists for that
           currency/year (left join).
+      - name: sr_sales_credit
+        description: >
+          Sales-rep sales credit for the opportunity, in its original transaction
+          currency (carried through unchanged from source.salesforce_opportunity).
+      - name: sr_sales_credit_usd
+        description: >
+          sr_sales_credit converted to USD: sr_sales_credit * currency_conversion.rate,
+          matched on the opportunity's currency and the year of its close_date.
+          Row-level value (not a sum). Null when no matching FX rate exists (left join).
