@@ -34,3 +34,9 @@ sources:
               Date the opportunity is expected to or did close. Its year is the
               join key to source.currency_conversion.year to pick the correct
               annual conversion rate.
+          - name: sr_sales_credit
+            description: >
+              Sales-rep sales credit: the monetary portion of the deal credited
+              to the sales representative, expressed in the opportunity's original
+              transaction currency (same currency as `amount`). Supports
+              fractional / split credit.

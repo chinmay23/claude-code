@@ -4,5 +4,6 @@ CREATE TABLE source.salesforce_opportunity (
     enterprise_id int,
     amount int,
     currency varchar(5),
-    close_date date
+    close_date date,
+    sr_sales_credit decimal(18,2)
 );
